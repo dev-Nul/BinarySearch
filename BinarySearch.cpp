@@ -5,8 +5,6 @@
 #include <list>
 #include <string>
 #include <sstream>
-#include <algorithm>
-#include <iterator>
 
 using namespace std;
 
@@ -142,6 +140,10 @@ int main()
 	cout << "PRESS ANY KEY TO CONTINUE...\n";
 	cin.ignore();
 
+	
+}
+
+/* MANUAL INPUT TESTING CODE - REPLACED BY USER INPUT
 	// Create a placeholder array, then find its length.
 	int list1[] = { 4, 2, 2, 8, 7 };
 	int len = sizeof(list1) / sizeof(list1[0]);
@@ -171,4 +173,5 @@ int main()
 	cout << "7 first appears at index " << binarySearch(list1, len, 7) << ".\n";
 	cout << "2 first appears at index " << binarySearch(list1, len, 2) << ".\n";
 	cout << "2 last appears at index " << binarySearch(list1, len, 2, true) << ".\n\n";
-}
+
+*/
