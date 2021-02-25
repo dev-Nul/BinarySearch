@@ -152,7 +152,7 @@ int main()
 
 	// Sort the user's array.
 	sortArray(list1, len);
-	4, 2, 2, 8, 7
+
 	// Show the user the sorted array.
 	cout << "The array is as follows: " << formatArray(list1, len) + ".\n";
 	cout << "The array length is " + std::to_string(len) + ".\n\n";
