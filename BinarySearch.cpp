@@ -190,10 +190,13 @@ int intArrayInput(int arr[], const char* prompt, unsigned int max = 100, const c
 	stringstream ss;
 	
 	int ints = 0;
+	string strBuffer = "";
 	int buffer = 0;
 
 	bool overflow = false;
+	bool nonDigits = false;
 	bool firstLoop = true;
+	signed int strBufferLength = 0;
 
 	while (true)
 	{
@@ -216,15 +219,29 @@ int intArrayInput(int arr[], const char* prompt, unsigned int max = 100, const c
 		ss.str(input);
 
 		cout << "\n";
-		try
-		{
-			while (ss >> buffer)
+		try {
+			while (ss >> strBuffer)
 			{
+				strBufferLength = strBuffer.length();
 				if (ints == max)
 				{
 					overflow = true;
 					break;
 				}
+				
+				for (int i = 0; i < strBufferLength; ++i)
+				{
+					if (!isdigit(strBuffer[i]))
+					{
+						nonDigits = true;
+						break;
+					}
+				}
+
+				buffer = stoi(strBuffer);
+				
+				if (nonDigits) break;
+
 				arr[ints] = buffer;
 				ints++;
 			}
@@ -240,9 +257,14 @@ int intArrayInput(int arr[], const char* prompt, unsigned int max = 100, const c
 			overflow = false;
 			continue;
 		}
+		else if (nonDigits)
+		{
+			cout << "You included a character that is not a number.  Please stick to numbers." << max << "." << "\n\n";
+			nonDigits = false;
+			continue;
+		}
 		break;
 	}
-	cout << "\n" << formatArray(arr, ints) << ".\n";
 	return ints;
 }
 
