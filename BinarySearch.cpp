@@ -61,6 +61,19 @@ void reverseArray(int arr[], int start, int end)
 	}
 }
 
+bool isInIntArr(int arr[], int len, int key)
+{
+	bool included = false;
+	for (int i = 0; i < len; ++i)
+	{
+		if (key == arr[i])
+		{
+			included = true;
+		}
+	}
+	return included;
+}
+
 // A function using bubble/sinking sort to sift numbers from lowest to highest. 
 void sortArray(int unorderedArray[], int len, bool reverse = false)
 {
@@ -238,9 +251,9 @@ int intArrayInput(int arr[], const char* prompt, unsigned int max = 100, const c
 					}
 				}
 
-				buffer = stoi(strBuffer);
-				
 				if (nonDigits) break;
+
+				buffer = stoi(strBuffer);
 
 				arr[ints] = buffer;
 				ints++;
@@ -259,7 +272,7 @@ int intArrayInput(int arr[], const char* prompt, unsigned int max = 100, const c
 		}
 		else if (nonDigits)
 		{
-			cout << "You included a character that is not a number.  Please stick to numbers." << max << "." << "\n\n";
+			cout << "You included a character that is not a number.  Please stick to numbers.\n\n";
 			nonDigits = false;
 			continue;
 		}
@@ -289,38 +302,105 @@ int main()
 	// Ask the user whether or not they'd like to provide their own values.
 	cout << "First off, would you like to insert your own series of numbers?\n";
 	bool manualInput = boolInput("(y/n):", "Please answer with either yes or no.");
+	cout << "\n\n";
 
-	int arr[100] = { 8, 2, 6, 7, 2, 3, 1 };
-	int len = 7;
+	clearScreen();
+
+	int arr[100] = {};
+	int len = 0;
+	string stringArr = "";
+	int key = 0;
+	int place = 0;
+
+	bool ascending = true;
+	bool first = true;
+	bool included = false;
+	bool findFirst = true;
+
+
 
 	// Managing if a user decides to provide their own values.
 	if (manualInput)
 	{
+		cout << "Sure!  Please insert a list of numbers, separated by spaces. (ex. \"245 34 1 25 29 28\" etc.)\n";
+		cout << "Also, make sure you keep to under 100 integers, and under 256 characters.\n\n";
+		len = intArrayInput(arr, "Please insert your numbers below:\n");
 
+		stringArr = formatArray(arr, len);
+
+		clearScreen();
+
+		cout << "\n Ok, you have " << len << " numbers and they are as follows:\n" << stringArr << "\n\n";
 	}
 	// Managing if the user decides to use the stock values.
 	else
 	{
-		string stringArr = formatArray(arr, len);
+		int stockArray[7] = { 2, 53, 6, 1, 2, 2, 100 };
+		len = 7;
 
-		cout << "Ok, we'll use the stock array [" << stringArr << "] which is " << len << " characters long.\n";
+		for (int i = 0; i < len; i++)
+		{
+			arr[i] = stockArray[i];
+		}
+		
+		stringArr = formatArray(arr, len);
+
+		clearScreen();
+
+		cout << "Ok, we'll use the stock array [" << stringArr << "] which is " << len << " characters long.\n\n";
 	}
 
-	sortArray(arr, len);
-	string sortedStringArr = formatArray(arr, len);
+	cout << "Would you like to sort your array in ascending order?\n";
+	ascending = boolInput("Please answer here (y/n):");
 
-	cout << "Sorted, your array is [" << sortedStringArr << "].\n\n";
+	if (ascending)
+	{
+		sortArray(arr, len);
+	}
+	else
+	{
+		sortArray(arr, len, true);
+	}
 
-	int test[100];
-	int inputLen = intArrayInput(test, "Please insert a list of characters:");
-	cout << formatArray(test, inputLen);
+	stringArr = formatArray(arr, len);
 
-	//intInput("Insert:", "Not right.");
+	clearScreen();
+
+	cout << "\n\nYour sorted array is now [" << stringArr << "].\n\n";
+
+	cout << "Ok, now it's time to choose an integer to search for.\n\n";
+	while (!included)
+	{
+		cout << "Please enter an integer you wish to search the array for.\n";
+		key = intInput("Please enter a number:");
+
+		if (isInIntArr(arr, len, key))
+		{
+			included = true;
+		}
+		else
+		{
+			clearScreen();
+			cout << "\nYour integer isn't included in the array.  Please choose another.\n\n";
+		}
+	}
+
+	clearScreen();
+
+	cout << "\nWould you like to find the first appearance of your integer? (y/n)\nIf you reply no, we'll find the last appearance for you.\n";
+	cout << "This might not matter if your integer appears only once.\n\n";
+
+	findFirst = boolInput("Please answer here (y/n):");
+	place = binarySearch(arr, len, key, !findFirst);
+
+	clearScreen();
+
+	cout << "\n\nYour value " << key << " appears at place " << place + 1 <<" (or arr[" << place << "]) in the following array:\n[" << stringArr <<"].\n\n";
 
 
-	
 	// Ask the user to press enter to exit.
 	cout << flush;
+	cin.ignore(INT_MAX, '\n');
 	cout << "PRESS RETURN TO EXIT...\n";
 	cin.ignore();
 }
