@@ -377,7 +377,7 @@ int intArrayInput(int arr[], const char* prompt, signed int max = 100)
 // The main loop (driver function).
 int main()
 {
-	// Align all future text to bottom of the screen for continuity.
+	// Align all future text to bottom of the screen for continuity and visually clear content.
 	clearScreen();
 	// A greeting and explanation of the program.
 	cout << "BINARY SEARCH\n";
@@ -399,12 +399,16 @@ int main()
 
 	clearScreen();
 
-	// Set all integeral variables and initialize them!
+	// Create the array all numbers will be stored to.
 	int arr[100] = {};
+
+	// Initialize integer arrays.
 	int len = 0;
-	string stringArr = "";
 	int key = 0;
 	int place = 0;
+
+	// Initialize string container for string-formatted arrays.
+	string stringArr = "";
 
 	// Initialize all the conditionals.  Assume that we're sorting in ascending order and finding the first values in binary search.
 	bool ascending = true;
