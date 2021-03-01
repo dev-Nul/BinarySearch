@@ -384,8 +384,8 @@ int main()
 	cout << "by Zachary Morritt\n\n";
 	
 	cout << "This program is meant to take a chosen amount of numbers as an input, then sort them in either ascending or descending order.\n";
+	cout << "Once all the numbers have been provided and sorted, you'll be asked for a value to search for, and its spot in the array will be returned.\n";
 	cout << "The only accepted inputs will be numbers.  If an incorrect input is entered, you will be ask to re-enter new values.\n";
-	cout << "If you wish, you can also choose a .txt file with numbers on each line, which will also be sorted.\n";
 	cout << "If you have any questions, don't hesitate to ask me for support.\n\n";
 
 	// Ask the user to press enter to continue after they've finished reading.
